@@ -22,7 +22,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
     self.barController = [[CKSideBarController alloc] init];
@@ -30,8 +30,8 @@
 
     self.barController.viewControllers = @[
         [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil],
-        [self navControllerWithTitle:@"Messages" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]],
-        [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
+        [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]],
+        [self navControllerWithTitle:@"Messages" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
     ];
     
     return YES;

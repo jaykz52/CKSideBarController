@@ -129,18 +129,22 @@
 
 - (UIButton *)sideButtonWithTitle:(NSString *)title image:(UIImage *)image {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:11];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     if (image) {
         UIImage *plainImage = [self tabBarImage:image size:image.size backgroundImage:nil];
+        UIImage *disabledImage = [self tabBarImage:image size:image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
+
         [button setImage:plainImage forState:UIControlStateNormal];
-        [button setImage:plainImage forState:UIControlStateHighlighted];
-        [button setImage:[self tabBarImage:image size:image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]] forState:UIControlStateDisabled];
+        [button setImage:disabledImage forState:UIControlStateHighlighted];
+        [button setImage:disabledImage forState:UIControlStateDisabled];
 
         // the space between the image and text
-        CGFloat spacing = 10.0;
+        CGFloat spacing = 12.0;
         float   textMargin = 6;
 
         // get the size of the elements here for readability
@@ -157,7 +161,6 @@
 
         button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing), 0.0, 0.0, -titleSize.width);
     }
-    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
 
