@@ -115,7 +115,9 @@
 
     int i = 0;
     for (UIViewController* viewController in self.viewControllers) {
-        UIButton *button = [self sideButtonWithTitle:viewController.tabBarItem.title image:viewController.tabBarItem.image];
+        NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
+        UIImage *image = viewController.tabBarItem.image ? viewController.tabBarItem.image : [UIImage imageNamed:@"default-tabbar-icon.png"];
+        UIButton *button = [self sideButtonWithTitle:title image:image];
         button.frame = CGRectMake(0, i * CKSideBarButtonHeight, self.sideBarView.bounds.size.width - CKCornerRadius, CKSideBarButtonHeight);
         button.tag = i;
 

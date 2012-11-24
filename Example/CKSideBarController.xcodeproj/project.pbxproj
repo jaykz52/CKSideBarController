@@ -15,8 +15,10 @@
 		603904D70F8697EBD456D01A /* selected-image-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603902398B1B3B59F7634823 /* selected-image-background@2x.png */; };
 		6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603902D4BE74F217BB3CBDEA /* CKAppDelegate.m */; };
 		603906FF044087C67D426E02 /* messages@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603905EA633E4D05343B0832 /* messages@2x.png */; };
+		603908AB13D4BD347F3B1C77 /* default-tabbar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6039057E4448DBF73C6DB016 /* default-tabbar-icon.png */; };
 		603909BD56326799DBBA8F34 /* rough_diagonal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390222989C940BA7867612 /* rough_diagonal@2x.png */; };
 		603909FB80BC74CFBBE2DF8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6039016BEB841ECF4770E72D /* CoreGraphics.framework */; };
+		60390A057B4ED4219122261C /* default-tabbar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390FA2FD311C19F96DC35B /* default-tabbar-icon@2x.png */; };
 		60390A865F5893C4E5C32682 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603905C129889BF6A9A7DDFC /* UIKit.framework */; };
 		60390AC1AB747B91590A44D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60390638908AC4012B4D2A30 /* InfoPlist.strings */; };
 		60390BAFC58B068C38A8C0E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603900E3CF099A5EA7D85F38 /* main.m */; };
@@ -27,6 +29,7 @@
 		60390D85C0707BB6D1FE2894 /* messages.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390ED1B9F265F8CD8E9889 /* messages.png */; };
 		60390D9405E711E9D6DB3938 /* selected-image-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603908E3F7892B0562C3B631 /* selected-image-background.png */; };
 		60390E3CEB22D9AE7F6ADE42 /* rough_diagonal.png in Resources */ = {isa = PBXBuildFile; fileRef = 603903179ABBE8CBA3418D10 /* rough_diagonal.png */; };
+		60390E5B75EBB4EC204BC425 /* CKTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6039018DE6B30775C3A6A8B8 /* CKTestViewController.m */; };
 		60390F9634B4E3583978D86E /* CKSideBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60390A626D668E03CF89A800 /* CKSideBarController.m */; };
 /* End PBXBuildFile section */
 
@@ -35,18 +38,21 @@
 		6039009C327E05AD11B04DD3 /* compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compose.png; sourceTree = "<group>"; };
 		603900E3CF099A5EA7D85F38 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6039016BEB841ECF4770E72D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6039018DE6B30775C3A6A8B8 /* CKTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKTestViewController.m; sourceTree = "<group>"; };
 		60390222989C940BA7867612 /* rough_diagonal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rough_diagonal@2x.png"; path = "../../Source/Resources/rough_diagonal@2x.png"; sourceTree = "<group>"; };
 		603902398B1B3B59F7634823 /* selected-image-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected-image-background@2x.png"; path = "../../Source/Resources/selected-image-background@2x.png"; sourceTree = "<group>"; };
 		603902D4BE74F217BB3CBDEA /* CKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKAppDelegate.m; sourceTree = "<group>"; };
 		603903179ABBE8CBA3418D10 /* rough_diagonal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rough_diagonal.png; path = ../../Source/Resources/rough_diagonal.png; sourceTree = "<group>"; };
 		60390357DCE9834B33EA962E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		603903CEA8D8FAF677D8EA9E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		6039057E4448DBF73C6DB016 /* default-tabbar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-tabbar-icon.png"; sourceTree = "<group>"; };
 		603905C129889BF6A9A7DDFC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		603905CD1AA2671B175D67F5 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		603905EA633E4D05343B0832 /* messages@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages@2x.png"; sourceTree = "<group>"; };
 		60390759A359C46D4C689764 /* CKSideBarController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CKSideBarController-Prefix.pch"; sourceTree = "<group>"; };
 		603907A659DB57E0AEA25984 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		603908C8D264A976DD3A2306 /* CKSideBarController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CKSideBarController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		603908DB25A4A76066027C9F /* CKTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKTestViewController.h; sourceTree = "<group>"; };
 		603908E3F7892B0562C3B631 /* selected-image-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected-image-background.png"; path = "../../Source/Resources/selected-image-background.png"; sourceTree = "<group>"; };
 		60390928E284F8EDA816B160 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		60390A152B5584589231999E /* CKSideBarController-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "CKSideBarController-Info.plist"; sourceTree = "<group>"; };
@@ -56,6 +62,7 @@
 		60390ED1B9F265F8CD8E9889 /* messages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages.png; sourceTree = "<group>"; };
 		60390F3BC828FC41D1CDF940 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		60390F82531E058FB59E3E2F /* CKSideBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSideBarController.h; path = ../../Source/CKSideBarController.h; sourceTree = "<group>"; };
+		60390FA2FD311C19F96DC35B /* default-tabbar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-tabbar-icon@2x.png"; sourceTree = "<group>"; };
 		60390FF173C1E692E933530D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -107,6 +114,8 @@
 				60390D9F8818634E07CB14F7 /* Resources */,
 				60390ED1B9F265F8CD8E9889 /* messages.png */,
 				603905EA633E4D05343B0832 /* messages@2x.png */,
+				6039018DE6B30775C3A6A8B8 /* CKTestViewController.m */,
+				603908DB25A4A76066027C9F /* CKTestViewController.h */,
 			);
 			path = CKSideBarController;
 			sourceTree = "<group>";
@@ -133,6 +142,8 @@
 				60390B81AEBE479629D158E3 /* compose@2x.png */,
 				60390357DCE9834B33EA962E /* search.png */,
 				603905CD1AA2671B175D67F5 /* search@2x.png */,
+				6039057E4448DBF73C6DB016 /* default-tabbar-icon.png */,
+				60390FA2FD311C19F96DC35B /* default-tabbar-icon@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -207,6 +218,8 @@
 				603902FED5235533FB269F60 /* compose@2x.png in Resources */,
 				6039004E2543EE446519928D /* search.png in Resources */,
 				60390CA53C4EBC64A79B9150 /* search@2x.png in Resources */,
+				603908AB13D4BD347F3B1C77 /* default-tabbar-icon.png in Resources */,
+				60390A057B4ED4219122261C /* default-tabbar-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +233,7 @@
 				60390BAFC58B068C38A8C0E0 /* main.m in Sources */,
 				6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */,
 				60390F9634B4E3583978D86E /* CKSideBarController.m in Sources */,
+				60390E5B75EBB4EC204BC425 /* CKTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

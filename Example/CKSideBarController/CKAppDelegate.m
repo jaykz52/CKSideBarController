@@ -8,6 +8,7 @@
 
 #import "CKAppDelegate.h"
 #import "CKSideBarController.h"
+#import "CKTestViewController.h"
 
 @interface CKAppDelegate ()
 
@@ -28,7 +29,7 @@
     self.window.rootViewController = self.barController;
 
     self.barController.viewControllers = @[
-        [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"messages.png"]],
+        [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil],
         [self navControllerWithTitle:@"Messages" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]],
         [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
     ];
@@ -36,13 +37,18 @@
     return YES;
 }
 
+BOOL setTabBarTitle = YES;
 - (UINavigationController *)navControllerWithTitle:(NSString *)title backgroundColor:(UIColor *)backgroundColor barImage:(UIImage *)image {
-    UIViewController *controller = [[UIViewController alloc] init];
+    CKTestViewController *controller = [[CKTestViewController alloc] init];
     controller.title = title;
     controller.view.backgroundColor = backgroundColor;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-    navController.tabBarItem.title = title;
+    if (setTabBarTitle)
+        navController.tabBarItem.title = title;
     navController.tabBarItem.image = image;
+
+    setTabBarTitle = !setTabBarTitle;
+
     return navController;
 }
 
