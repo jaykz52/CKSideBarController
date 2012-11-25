@@ -111,5 +111,9 @@ BOOL setTabBarTitle = YES;
     NSLog(@"viewController %@ selected!", viewController);
 }
 
+- (BOOL)sideBarController:(CKSideBarController *)sideBarController rowShouldGlow:(NSUInteger)row {
+    return row == 2;
+}
+
 
 @end

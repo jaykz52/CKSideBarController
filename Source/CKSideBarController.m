@@ -29,8 +29,10 @@
 @property (nonatomic) UIImageView *iconView;
 @property (nonatomic) UIImage *image;
 @property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UIImageView *glowView;
 
 - (void)setIsActive:(BOOL)isActive;
+- (void)setIsGlowing:(BOOL)isGlowing;
 
 @end
 
@@ -44,6 +46,11 @@
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self addSubview:self.iconView];
 
+        self.glowView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        self.glowView.image = [UIImage imageNamed:@"tabbar-glow.png"];
+        self.glowView.hidden = YES;
+        [self addSubview:self.glowView];
+
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [self addSubview:self.titleLabel];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -56,16 +63,24 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat spacing = 6.0;
-    CGFloat width = self.contentView.frame.size.width - CKCornerRadius;
-    self.iconView.frame = CGRectMake((width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2) - ((spacing + 11) / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
+    CGFloat width = self.bounds.size.width - CKCornerRadius;
+    CGFloat height = self.bounds.size.height;
+    self.iconView.frame = CGRectMake((width / 2) - (CKSideBarImageEdgeLength / 2), (height / 2) - (CKSideBarImageEdgeLength / 2) - ((spacing + 11) / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
     self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.iconView.frame) + spacing, width, 11);
+    self.glowView.frame = CGRectMake(0, (height / 2) - (self.glowView.image.size.height / 2), self.glowView.image.size.width, self.glowView.image.size.height);
 }
 
 - (void)setIsActive:(BOOL)isActive {
     self.titleLabel.textColor = isActive ? [UIColor whiteColor] : [UIColor lightGrayColor];
-    UIImage *plainImage = [self tabBarImage:self.image size:self.image.size backgroundImage:nil];
-    UIImage *activeImage = [self tabBarImage:self.image size:self.image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
-    self.iconView.image = isActive ? activeImage : plainImage;
+    if (isActive) {
+        self.iconView.image = [self tabBarImage:self.image size:self.image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
+    } else {
+        self.iconView.image = [self tabBarImage:self.image size:self.image.size backgroundImage:nil];
+    }
+}
+
+- (void)setIsGlowing:(BOOL)isGlowing {
+    self.glowView.hidden = !isGlowing;
 }
 
 -(UIImage*)tabBarImage:(UIImage*)startImage size:(CGSize)targetSize backgroundImage:(UIImage*)backgroundImageSource {
@@ -272,8 +287,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CKSideBarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sideBar"];
-    if (!cell) cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sideBar"];
+    static NSString *reuseId = @"sideBar";
+    CKSideBarCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+    if (!cell) cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
 
     UIViewController *viewController = self.viewControllers[indexPath.row];
     NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
@@ -282,6 +298,7 @@
     cell.titleLabel.text = title;
     [cell setImage:image];
     [cell setIsActive:(viewController == self.selectedViewController)];
+    [cell setIsGlowing:[self.delegate respondsToSelector:@selector(sideBarController:rowShouldGlow:)] && [self.delegate sideBarController:self rowShouldGlow:indexPath.row]];
 
     return cell;
 }

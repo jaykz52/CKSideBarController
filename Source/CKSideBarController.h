@@ -35,5 +35,6 @@
 @optional
 - (BOOL)sideBarController:(CKSideBarController *)sideBarController shouldSelectViewController:(UIViewController *)viewController;
 - (void)sideBarController:(CKSideBarController *)sideBarController didSelectViewController:(UIViewController *)viewController;
+- (BOOL)sideBarController:(CKSideBarController *)sideBarController rowShouldGlow:(NSUInteger)row;
 
 @end
