@@ -18,9 +18,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CKSideBarController.h"
 
-#define CKSideBarWidth 80
+#define CKSideBarWidth 84
 #define CKCornerRadius 6
-#define CKSideBarButtonHeight 80
+#define CKSideBarButtonHeight 84
 
 @interface CKSideBarController ()
 
