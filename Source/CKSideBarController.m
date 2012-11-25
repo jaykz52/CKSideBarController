@@ -21,181 +21,49 @@
 #define CKSideBarWidth 84
 #define CKCornerRadius 6
 #define CKSideBarButtonHeight 84
+#define CKSideBarImageEdgeLength 28
 
-@interface CKSideBarController ()
+@interface CKSideBarCell : UITableViewCell
 
-@property(nonatomic) UIView *containerView;
-@property(nonatomic, strong) UIView *sideBarView;
-@property(nonatomic) NSMutableArray *sideMenuButtons;
+@property (nonatomic) UIImageView *iconView;
+@property (nonatomic) UIImage *image;
+@property (nonatomic) UILabel *titleLabel;
+
+- (void)setIsActive:(BOOL)isActive;
 
 @end
 
-@implementation CKSideBarController
+@implementation CKSideBarCell
 
-- (id)init {
-    self = [super init];
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"rough_diagonal.png"]];
-//        self.view.backgroundColor = [UIColor colorWithRed:32/255.0 green:32/255.0 blue:32/255.0 alpha:1.0];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        self.sideBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CKSideBarWidth + CKCornerRadius, self.view.bounds.size.height)];
-        self.sideBarView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
-        [self.view addSubview:self.sideBarView];
+        self.iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [self addSubview:self.iconView];
 
-        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(CKSideBarWidth, 0, self.view.bounds.size.width - CKSideBarWidth, self.view.bounds.size.height)];
-        self.containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        [self.view addSubview:self.containerView];
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self addSubview:self.titleLabel];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.font = [UIFont boldSystemFontOfSize:11];
     }
     return self;
 }
 
-- (void)viewWillLayoutSubviews {
-    self.selectedViewController.view.frame = self.containerView.bounds;
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGFloat spacing = 6.0;
+    self.iconView.frame = CGRectMake((self.contentView.frame.size.width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
+    self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.iconView.frame) + spacing, self.bounds.size.width, 11);
 }
 
-#pragma mark - Autorotation
-// iOS 6+
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
-}
-
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (void)setViewControllers:(NSArray *)viewControllers {
-    if (viewControllers != _viewControllers) {
-        BOOL isSelectedControllerPresent = [viewControllers containsObject:_selectedViewController];
-        NSUInteger previousSelectedIndex = self.selectedIndex;
-
-        for (UIViewController *controller in _viewControllers) {
-            if (controller != _selectedViewController || !isSelectedControllerPresent) {
-                [controller.view removeFromSuperview];
-                [controller removeFromParentViewController];
-            }
-        }
-
-        _viewControllers = viewControllers;
-
-        for (UIViewController *controller in _viewControllers) {
-            [self addChildViewController:controller];
-
-            controller.view.layer.cornerRadius = CKCornerRadius;
-            controller.view.clipsToBounds = YES;
-        }
-
-        [self createSideMenu];
-
-        if (_selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
-            // we cool
-        } else {
-            self.selectedViewController = _viewControllers[previousSelectedIndex];
-        }
-
-        [self updateButtons];
-    }
-}
-
-- (void)setSelectedViewController:(UIViewController *)selectedViewController {
-    BOOL delegateRespondsToSelector = [self.delegate respondsToSelector:@selector(sideBarController:shouldSelectViewController:)];
-    BOOL shouldSelectController = delegateRespondsToSelector ? [self.delegate sideBarController:self shouldSelectViewController:selectedViewController] : YES;
-    if (shouldSelectController && _selectedViewController != selectedViewController) {
-        UIViewController *oldController = _selectedViewController;
-        _selectedViewController = selectedViewController;
-
-        [self.containerView addSubview:_selectedViewController.view];
-        [oldController.view removeFromSuperview];
-
-        [self updateButtons];
-
-        [self.view setNeedsLayout];
-
-        if ([self.delegate respondsToSelector:@selector(sideBarController:didSelectViewController:)]) {
-            [self.delegate sideBarController:self didSelectViewController:_selectedViewController];
-        }
-    }
-}
-
-- (NSUInteger)selectedIndex {
-    if (self.selectedViewController) {
-        return [self.viewControllers indexOfObject:self.selectedViewController];
-    } else {
-        return 0;
-    }
-}
-
-- (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    self.selectedViewController = self.viewControllers[selectedIndex];
-}
-
-- (void)createSideMenu {
-    for (UIButton *sideButton in self.sideMenuButtons) {
-        [sideButton removeFromSuperview];
-    }
-    self.sideMenuButtons = [[NSMutableArray alloc] init];
-
-    int i = 0;
-    for (UIViewController* viewController in self.viewControllers) {
-        NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
-        UIImage *image = viewController.tabBarItem.image ? viewController.tabBarItem.image : [UIImage imageNamed:@"default-tabbar-icon.png"];
-        UIButton *button = [self sideButtonWithTitle:title image:image];
-        button.frame = CGRectMake(0, i * CKSideBarButtonHeight, self.sideBarView.bounds.size.width - CKCornerRadius, CKSideBarButtonHeight);
-        button.tag = i;
-
-        [self.sideBarView addSubview:button];
-        [self.sideMenuButtons addObject:button];
-        i++;
-    }
-}
-
-- (UIButton *)sideButtonWithTitle:(NSString *)title image:(UIImage *)image {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
-    [button setTitle:title forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:11];
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-    if (image) {
-        UIImage *plainImage = [self tabBarImage:image size:image.size backgroundImage:nil];
-        UIImage *disabledImage = [self tabBarImage:image size:image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
-
-        [button setImage:plainImage forState:UIControlStateNormal];
-        [button setImage:plainImage forState:UIControlStateHighlighted];
-        [button setImage:disabledImage forState:UIControlStateSelected];
-        [button setImage:disabledImage forState:UIControlStateDisabled];
-
-        // the space between the image and text
-        CGFloat spacing = 12.0;
-        float   textMargin = 6;
-
-        // get the size of the elements here for readability
-        CGSize  imageSize   = image.size;
-        CGSize  titleSize   = button.titleLabel.frame.size;
-        CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);      // get the height they will take up as a unit
-
-        // lower the text and push it left to center it
-        button.titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width +textMargin, - (totalHeight - titleSize.height), +textMargin );   // top, left, bottom, right
-
-        // the text width might have changed (in case it was shortened before due to
-        // lack of space and isn't anymore now), so we get the frame size again
-        titleSize = button.titleLabel.bounds.size;
-
-        button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing), 0.0, 0.0, -titleSize.width);
-    }
-    return button;
-}
-
-- (void)updateButtons {
-    for (UIButton *button in self.sideMenuButtons) {
-        button.enabled = !(button.tag == [self.viewControllers indexOfObject:_selectedViewController]);
-    }
-}
-
-- (void)buttonClicked:(id)sender {
-    NSInteger buttonIndex = ((UIButton *) sender).tag;
-    self.selectedViewController = self.viewControllers[buttonIndex];
+- (void)setIsActive:(BOOL)isActive {
+    self.titleLabel.textColor = isActive ? [UIColor whiteColor] : [UIColor lightGrayColor];
+    UIImage *plainImage = [self tabBarImage:self.image size:self.image.size backgroundImage:nil];
+    UIImage *activeImage = [self tabBarImage:self.image size:self.image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
+    self.iconView.image = isActive ? activeImage : plainImage;
 }
 
 -(UIImage*)tabBarImage:(UIImage*)startImage size:(CGSize)targetSize backgroundImage:(UIImage*)backgroundImageSource {
@@ -277,6 +145,143 @@
     UIGraphicsEndImageContext();
 
     return finalBackgroundImage;
+}
+
+@end
+
+@interface CKSideBarController () <UITableViewDelegate, UITableViewDataSource>
+
+@property(nonatomic) UIView *containerView;
+@property(nonatomic, strong) UITableView *sideBarView;
+
+@end
+
+@implementation CKSideBarController
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"rough_diagonal.png"]];
+
+        self.sideBarView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CKSideBarWidth + CKCornerRadius, self.view.bounds.size.height) style:UITableViewStylePlain];
+        self.sideBarView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
+        self.sideBarView.backgroundColor = [UIColor clearColor];
+        self.sideBarView.scrollEnabled = NO;
+        self.sideBarView.dataSource = self;
+        self.sideBarView.delegate = self;
+        self.sideBarView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.sideBarView.rowHeight = CKSideBarButtonHeight;
+        [self.view addSubview:self.sideBarView];
+
+        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(CKSideBarWidth, 0, self.view.bounds.size.width - CKSideBarWidth, self.view.bounds.size.height)];
+        self.containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:self.containerView];
+    }
+    return self;
+}
+
+- (void)viewWillLayoutSubviews {
+    self.selectedViewController.view.frame = self.containerView.bounds;
+}
+
+#pragma mark - Autorotation
+// iOS 6+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (void)setViewControllers:(NSArray *)viewControllers {
+    if (viewControllers != _viewControllers) {
+        BOOL isSelectedControllerPresent = [viewControllers containsObject:_selectedViewController];
+        NSUInteger previousSelectedIndex = self.selectedIndex;
+
+        for (UIViewController *controller in _viewControllers) {
+            if (controller != _selectedViewController || !isSelectedControllerPresent) {
+                [controller.view removeFromSuperview];
+                [controller removeFromParentViewController];
+            }
+        }
+
+        _viewControllers = viewControllers;
+
+        for (UIViewController *controller in _viewControllers) {
+            [self addChildViewController:controller];
+
+            controller.view.layer.cornerRadius = CKCornerRadius;
+            controller.view.clipsToBounds = YES;
+        }
+
+        if (_selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
+            // we cool
+        } else {
+            self.selectedViewController = _viewControllers[previousSelectedIndex];
+        }
+
+        [self.sideBarView reloadData];
+    }
+}
+
+- (void)setSelectedViewController:(UIViewController *)selectedViewController {
+    BOOL delegateRespondsToSelector = [self.delegate respondsToSelector:@selector(sideBarController:shouldSelectViewController:)];
+    BOOL shouldSelectController = delegateRespondsToSelector ? [self.delegate sideBarController:self shouldSelectViewController:selectedViewController] : YES;
+    if (shouldSelectController && _selectedViewController != selectedViewController) {
+        UIViewController *oldController = _selectedViewController;
+        _selectedViewController = selectedViewController;
+
+        [self.containerView addSubview:_selectedViewController.view];
+        [oldController.view removeFromSuperview];
+
+        [self.sideBarView reloadData];
+
+        [self.view setNeedsLayout];
+
+        if ([self.delegate respondsToSelector:@selector(sideBarController:didSelectViewController:)]) {
+            [self.delegate sideBarController:self didSelectViewController:_selectedViewController];
+        }
+    }
+}
+
+- (NSUInteger)selectedIndex {
+    if (self.selectedViewController) {
+        return [self.viewControllers indexOfObject:self.selectedViewController];
+    } else {
+        return 0;
+    }
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    self.selectedViewController = self.viewControllers[selectedIndex];
+}
+
+#pragma mark - UITableView
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.viewControllers.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CKSideBarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sideBar"];
+    if (!cell) {
+        cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sideBar"];
+    }
+
+    UIViewController *viewController = self.viewControllers[indexPath.row];
+    NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
+    UIImage *image = viewController.tabBarItem.image ? viewController.tabBarItem.image : [UIImage imageNamed:@"default-tabbar-icon.png"];
+    cell.titleLabel.text = title;
+    [cell setImage:image];
+    [cell setIsActive:(viewController == self.selectedViewController)];
+
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.selectedViewController = self.viewControllers[indexPath.row];
+    [self.sideBarView reloadData];
 }
 
 @end
