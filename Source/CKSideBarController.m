@@ -57,7 +57,7 @@
     [super layoutSubviews];
     CGFloat spacing = 6.0;
     CGFloat width = self.contentView.frame.size.width - CKCornerRadius;
-    self.iconView.frame = CGRectMake((width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
+    self.iconView.frame = CGRectMake((width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2) - ((spacing + 11) / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
     self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.iconView.frame) + spacing, width, 11);
 }
 
@@ -154,7 +154,8 @@
 @interface CKSideBarController () <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic) UIView *containerView;
-@property(nonatomic, strong) UITableView *sideBarView;
+@property(nonatomic) UITableView *sideBarView;
+@property(nonatomic) UIView *borderView;
 
 @end
 
@@ -174,9 +175,17 @@
         self.sideBarView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.sideBarView.rowHeight = CKSideBarButtonHeight;
         [self.view addSubview:self.sideBarView];
+        
+        self.borderView = [[UIView alloc] initWithFrame:CGRectMake(CKSideBarWidth - 1.0, 0, 20, self.view.bounds.size.height)];
+        self.borderView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
+        self.borderView.backgroundColor = [UIColor blackColor];
+        self.borderView.layer.cornerRadius = CKCornerRadius;
+        [self.view addSubview:self.borderView];
 
         self.containerView = [[UIView alloc] initWithFrame:CGRectMake(CKSideBarWidth, 0, self.view.bounds.size.width - CKSideBarWidth, self.view.bounds.size.height)];
         self.containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.containerView.clipsToBounds = YES;
+        self.containerView.layer.cornerRadius = CKCornerRadius;
         [self.view addSubview:self.containerView];
     }
     return self;
@@ -212,9 +221,6 @@
 
         for (UIViewController *controller in _viewControllers) {
             [self addChildViewController:controller];
-
-            controller.view.layer.cornerRadius = CKCornerRadius;
-            controller.view.clipsToBounds = YES;
         }
 
         if (_selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
@@ -267,13 +273,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CKSideBarCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sideBar"];
-    if (!cell) {
-        cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sideBar"];
-    }
+    if (!cell) cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sideBar"];
 
     UIViewController *viewController = self.viewControllers[indexPath.row];
     NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
     UIImage *image = viewController.tabBarItem.image ? viewController.tabBarItem.image : [UIImage imageNamed:@"default-tabbar-icon.png"];
+
     cell.titleLabel.text = title;
     [cell setImage:image];
     [cell setIsActive:(viewController == self.selectedViewController)];
