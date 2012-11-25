@@ -86,7 +86,7 @@
 
         [self createSideMenu];
 
-        if (self.selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
+        if (_selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
             // we cool
         } else {
             self.selectedViewController = _viewControllers[previousSelectedIndex];
