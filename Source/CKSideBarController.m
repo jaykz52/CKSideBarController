@@ -28,7 +28,6 @@
 @property(nonatomic, strong) UIView *sideBarView;
 @property(nonatomic) NSMutableArray *sideMenuButtons;
 
-
 @end
 
 @implementation CKSideBarController
@@ -66,9 +65,14 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers {
     if (viewControllers != _viewControllers) {
+        BOOL isSelectedControllerPresent = [viewControllers containsObject:_selectedViewController];
+        NSUInteger previousSelectedIndex = self.selectedIndex;
+
         for (UIViewController *controller in _viewControllers) {
-            [controller removeFromParentViewController];
-            [controller.view removeFromSuperview];
+            if (controller != _selectedViewController || !isSelectedControllerPresent) {
+                [controller.view removeFromSuperview];
+                [controller removeFromParentViewController];
+            }
         }
 
         _viewControllers = viewControllers;
@@ -82,7 +86,13 @@
 
         [self createSideMenu];
 
-        if (_viewControllers.count > 0) self.selectedViewController = _viewControllers[0];
+        if (self.selectedViewController && [_viewControllers containsObject:self.selectedViewController]) {
+            // we cool
+        } else {
+            self.selectedViewController = _viewControllers[previousSelectedIndex];
+        }
+
+        [self updateButtons];
     }
 }
 
@@ -96,9 +106,7 @@
         [self.containerView addSubview:_selectedViewController.view];
         [oldController.view removeFromSuperview];
 
-        for (UIButton *button in self.sideMenuButtons) {
-            button.enabled = !(button.tag == [self.viewControllers indexOfObject:_selectedViewController]);
-        }
+        [self updateButtons];
 
         [self.view setNeedsLayout];
 
@@ -106,6 +114,18 @@
             [self.delegate sideBarController:self didSelectViewController:_selectedViewController];
         }
     }
+}
+
+- (NSUInteger)selectedIndex {
+    if (self.selectedViewController) {
+        return [self.viewControllers indexOfObject:self.selectedViewController];
+    } else {
+        return 0;
+    }
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    self.selectedViewController = self.viewControllers[selectedIndex];
 }
 
 - (void)createSideMenu {
@@ -135,6 +155,7 @@
     button.titleLabel.font = [UIFont boldSystemFontOfSize:11];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
     if (image) {
         UIImage *plainImage = [self tabBarImage:image size:image.size backgroundImage:nil];
@@ -142,6 +163,7 @@
 
         [button setImage:plainImage forState:UIControlStateNormal];
         [button setImage:plainImage forState:UIControlStateHighlighted];
+        [button setImage:disabledImage forState:UIControlStateSelected];
         [button setImage:disabledImage forState:UIControlStateDisabled];
 
         // the space between the image and text
@@ -163,6 +185,12 @@
         button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing), 0.0, 0.0, -titleSize.width);
     }
     return button;
+}
+
+- (void)updateButtons {
+    for (UIButton *button in self.sideMenuButtons) {
+        button.enabled = !(button.tag == [self.viewControllers indexOfObject:_selectedViewController]);
+    }
 }
 
 - (void)buttonClicked:(id)sender {

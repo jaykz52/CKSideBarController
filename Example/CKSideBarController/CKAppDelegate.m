@@ -13,6 +13,9 @@
 @interface CKAppDelegate () <CKSideBarControllerDelegate>
 
 @property(nonatomic) CKSideBarController *barController;
+@property(nonatomic) UINavigationController *controller2;
+@property(nonatomic) UINavigationController *controller1;
+@property(nonatomic) UINavigationController *controller3;
 
 @end
 
@@ -24,13 +27,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
+
+    self.controller1 = [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil];
+    self.controller2 = [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]];
+    self.controller3 = [self navControllerWithTitle:@"Can't Touch" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]];
     
     self.barController = [[CKSideBarController alloc] init];
     self.barController.delegate = self;
     self.barController.viewControllers = @[
-        [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil],
-        [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]],
-        [self navControllerWithTitle:@"Can't Touch" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
+        self.controller1,
+        self.controller2,
+        self.controller3
     ];
     self.window.rootViewController = self.barController;
 
@@ -50,6 +57,14 @@ BOOL setTabBarTitle = YES;
     setTabBarTitle = !setTabBarTitle;
 
     return navController;
+}
+
+- (void)updateViewControllers {
+    self.barController.viewControllers = @[
+        self.controller1,
+        self.controller3,
+        self.controller2
+    ];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

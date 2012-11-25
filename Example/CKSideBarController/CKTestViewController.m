@@ -1,4 +1,5 @@
 #import "CKTestViewController.h"
+#import "CKAppDelegate.h"
 
 
 @implementation CKTestViewController
@@ -27,6 +28,11 @@
     }
     cell.textLabel.text = [NSString stringWithFormat:@"Row %i", indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CKAppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate updateViewControllers];
 }
 
 - (void)viewDidLoad {
