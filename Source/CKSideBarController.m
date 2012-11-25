@@ -36,7 +36,8 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"rough_diagonal.png"]];
+//        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"rough_diagonal.png"]];
+        self.view.backgroundColor = [UIColor colorWithRed:32/255.0 green:32/255.0 blue:32/255.0 alpha:1.0];
 
         self.sideBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CKSideBarWidth + CKCornerRadius, self.view.bounds.size.height)];
         self.sideBarView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
@@ -133,14 +134,14 @@
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:11];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     if (image) {
         UIImage *plainImage = [self tabBarImage:image size:image.size backgroundImage:nil];
         UIImage *disabledImage = [self tabBarImage:image size:image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
 
         [button setImage:plainImage forState:UIControlStateNormal];
-        [button setImage:disabledImage forState:UIControlStateHighlighted];
+        [button setImage:plainImage forState:UIControlStateHighlighted];
         [button setImage:disabledImage forState:UIControlStateDisabled];
 
         // the space between the image and text

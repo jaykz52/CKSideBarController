@@ -13,6 +13,7 @@
 		603902FED5235533FB269F60 /* compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390B81AEBE479629D158E3 /* compose@2x.png */; };
 		60390401971DE67BFF33D6A8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60390FF173C1E692E933530D /* QuartzCore.framework */; };
 		603904D70F8697EBD456D01A /* selected-image-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603902398B1B3B59F7634823 /* selected-image-background@2x.png */; };
+		6039050051C9ADD92A19E1A8 /* tabbar-glow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603907B94AC0CCFFD31FB6CA /* tabbar-glow@2x.png */; };
 		6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603902D4BE74F217BB3CBDEA /* CKAppDelegate.m */; };
 		60390661DD7BAC0E5590623F /* default-tabbar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 603907984C8D708DB0754F20 /* default-tabbar-icon.png */; };
 		603906FF044087C67D426E02 /* messages@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603905EA633E4D05343B0832 /* messages@2x.png */; };
@@ -21,6 +22,7 @@
 		60390A781E5F42A55F4E1CFC /* default-tabbar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390114CE55D4E53AA2CAF6 /* default-tabbar-icon@2x.png */; };
 		60390A865F5893C4E5C32682 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603905C129889BF6A9A7DDFC /* UIKit.framework */; };
 		60390AC1AB747B91590A44D4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60390638908AC4012B4D2A30 /* InfoPlist.strings */; };
+		60390B48CBF089A4AAE4CC07 /* tabbar-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 603908D48E15B8119F38FDB0 /* tabbar-glow.png */; };
 		60390BAFC58B068C38A8C0E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 603900E3CF099A5EA7D85F38 /* main.m */; };
 		60390BF7DD6E05DF08945026 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 603903CEA8D8FAF677D8EA9E /* Default.png */; };
 		60390CA53C4EBC64A79B9150 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603905CD1AA2671B175D67F5 /* search@2x.png */; };
@@ -52,7 +54,9 @@
 		60390759A359C46D4C689764 /* CKSideBarController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CKSideBarController-Prefix.pch"; sourceTree = "<group>"; };
 		603907984C8D708DB0754F20 /* default-tabbar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-tabbar-icon.png"; path = "../../Source/Resources/default-tabbar-icon.png"; sourceTree = "<group>"; };
 		603907A659DB57E0AEA25984 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		603907B94AC0CCFFD31FB6CA /* tabbar-glow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tabbar-glow@2x.png"; path = "../../Source/Resources/tabbar-glow@2x.png"; sourceTree = "<group>"; };
 		603908C8D264A976DD3A2306 /* CKSideBarController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CKSideBarController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		603908D48E15B8119F38FDB0 /* tabbar-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tabbar-glow.png"; path = "../../Source/Resources/tabbar-glow.png"; sourceTree = "<group>"; };
 		603908DB25A4A76066027C9F /* CKTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKTestViewController.h; sourceTree = "<group>"; };
 		603908E3F7892B0562C3B631 /* selected-image-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected-image-background.png"; path = "../../Source/Resources/selected-image-background.png"; sourceTree = "<group>"; };
 		60390928E284F8EDA816B160 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -116,6 +120,10 @@
 				603905EA633E4D05343B0832 /* messages@2x.png */,
 				6039018DE6B30775C3A6A8B8 /* CKTestViewController.m */,
 				603908DB25A4A76066027C9F /* CKTestViewController.h */,
+				6039009C327E05AD11B04DD3 /* compose.png */,
+				60390B81AEBE479629D158E3 /* compose@2x.png */,
+				60390357DCE9834B33EA962E /* search.png */,
+				603905CD1AA2671B175D67F5 /* search@2x.png */,
 			);
 			path = CKSideBarController;
 			sourceTree = "<group>";
@@ -138,12 +146,10 @@
 				60390222989C940BA7867612 /* rough_diagonal@2x.png */,
 				603908E3F7892B0562C3B631 /* selected-image-background.png */,
 				603902398B1B3B59F7634823 /* selected-image-background@2x.png */,
-				6039009C327E05AD11B04DD3 /* compose.png */,
-				60390B81AEBE479629D158E3 /* compose@2x.png */,
-				60390357DCE9834B33EA962E /* search.png */,
-				603905CD1AA2671B175D67F5 /* search@2x.png */,
 				603907984C8D708DB0754F20 /* default-tabbar-icon.png */,
 				60390114CE55D4E53AA2CAF6 /* default-tabbar-icon@2x.png */,
+				603908D48E15B8119F38FDB0 /* tabbar-glow.png */,
+				603907B94AC0CCFFD31FB6CA /* tabbar-glow@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -220,6 +226,8 @@
 				60390CA53C4EBC64A79B9150 /* search@2x.png in Resources */,
 				60390661DD7BAC0E5590623F /* default-tabbar-icon.png in Resources */,
 				60390A781E5F42A55F4E1CFC /* default-tabbar-icon@2x.png in Resources */,
+				60390B48CBF089A4AAE4CC07 /* tabbar-glow.png in Resources */,
+				6039050051C9ADD92A19E1A8 /* tabbar-glow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

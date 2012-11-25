@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 
 
-@interface CKTestViewController : UIViewController
-
+@interface CKTestViewController : UITableViewController
 
 @end

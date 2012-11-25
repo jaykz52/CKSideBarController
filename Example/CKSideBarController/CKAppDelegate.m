@@ -3,14 +3,14 @@
 //  CKSideBarController
 //
 //  Created by Jason Kozemczak on 11/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Jason Kozemczak. All rights reserved.
 //
 
 #import "CKAppDelegate.h"
 #import "CKSideBarController.h"
 #import "CKTestViewController.h"
 
-@interface CKAppDelegate ()
+@interface CKAppDelegate () <CKSideBarControllerDelegate>
 
 @property(nonatomic) CKSideBarController *barController;
 
@@ -26,14 +26,14 @@
     [self.window makeKeyAndVisible];
     
     self.barController = [[CKSideBarController alloc] init];
-    self.window.rootViewController = self.barController;
-
+    self.barController.delegate = self;
     self.barController.viewControllers = @[
         [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil],
         [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]],
-        [self navControllerWithTitle:@"Messages" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
+        [self navControllerWithTitle:@"Can't Touch" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]]
     ];
-    
+    self.window.rootViewController = self.barController;
+
     return YES;
 }
 
@@ -83,5 +83,16 @@ BOOL setTabBarTitle = YES;
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
 }
+
+#pragma mark - CKSideBarControllerDelegate
+
+- (BOOL)sideBarController:(CKSideBarController *)sideBarController shouldSelectViewController:(UIViewController *)viewController {
+    return (![viewController.title isEqualToString:@"Can't Touch"]);
+}
+
+- (void)sideBarController:(CKSideBarController *)sideBarController didSelectViewController:(UIViewController *)viewController {
+
+}
+
 
 @end
