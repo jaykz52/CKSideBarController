@@ -23,6 +23,7 @@
 #define CKSideBarButtonHeight 84
 #define CKSideBarImageEdgeLength 28
 
+
 @interface CKSideBarCell : UITableViewCell
 
 @property (nonatomic) UIImageView *iconView;
@@ -55,8 +56,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat spacing = 6.0;
-    self.iconView.frame = CGRectMake((self.contentView.frame.size.width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
-    self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.iconView.frame) + spacing, self.bounds.size.width, 11);
+    CGFloat width = self.contentView.frame.size.width - CKCornerRadius;
+    self.iconView.frame = CGRectMake((width / 2) - (CKSideBarImageEdgeLength / 2), (self.bounds.size.height / 2) - (CKSideBarImageEdgeLength / 2), CKSideBarImageEdgeLength, CKSideBarImageEdgeLength);
+    self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.iconView.frame) + spacing, width, 11);
 }
 
 - (void)setIsActive:(BOOL)isActive {
