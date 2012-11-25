@@ -91,7 +91,7 @@ BOOL setTabBarTitle = YES;
 }
 
 - (void)sideBarController:(CKSideBarController *)sideBarController didSelectViewController:(UIViewController *)viewController {
-
+    NSLog(@"viewController %@ selected!", viewController);
 }
 
 
