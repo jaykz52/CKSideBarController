@@ -11,6 +11,7 @@
 		6039020135B7FE399ECC8581 /* compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 6039009C327E05AD11B04DD3 /* compose.png */; };
 		603902A70EDD557C51285919 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390F3BC828FC41D1CDF940 /* Default-568h@2x.png */; };
 		603902FED5235533FB269F60 /* compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390B81AEBE479629D158E3 /* compose@2x.png */; };
+		60390384643D87D83E27C702 /* CKSideBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 60390C602C60C243009B68C2 /* CKSideBarItem.m */; };
 		60390401971DE67BFF33D6A8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60390FF173C1E692E933530D /* QuartzCore.framework */; };
 		603904D70F8697EBD456D01A /* selected-image-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603902398B1B3B59F7634823 /* selected-image-background@2x.png */; };
 		6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 603902D4BE74F217BB3CBDEA /* CKAppDelegate.m */; };
@@ -49,6 +50,7 @@
 		603903179ABBE8CBA3418D10 /* rough_diagonal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rough_diagonal.png; path = ../../Source/Resources/rough_diagonal.png; sourceTree = "<group>"; };
 		60390357DCE9834B33EA962E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		603903CEA8D8FAF677D8EA9E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		60390531E6989CC7FBFCB471 /* CKSideBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CKSideBarItem.h; path = ../../Source/CKSideBarItem.h; sourceTree = "<group>"; };
 		603905C129889BF6A9A7DDFC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		603905CD1AA2671B175D67F5 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		603905EA633E4D05343B0832 /* messages@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages@2x.png"; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		60390A152B5584589231999E /* CKSideBarController-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "CKSideBarController-Info.plist"; sourceTree = "<group>"; };
 		60390A626D668E03CF89A800 /* CKSideBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CKSideBarController.m; path = ../../Source/CKSideBarController.m; sourceTree = "<group>"; };
 		60390B81AEBE479629D158E3 /* compose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose@2x.png"; sourceTree = "<group>"; };
+		60390C602C60C243009B68C2 /* CKSideBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CKSideBarItem.m; path = ../../Source/CKSideBarItem.m; sourceTree = "<group>"; };
 		60390D4C57AD386112E2E314 /* CKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKAppDelegate.h; sourceTree = "<group>"; };
 		60390ED1B9F265F8CD8E9889 /* messages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages.png; sourceTree = "<group>"; };
 		60390F3BC828FC41D1CDF940 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				60390B81AEBE479629D158E3 /* compose@2x.png */,
 				60390357DCE9834B33EA962E /* search.png */,
 				603905CD1AA2671B175D67F5 /* search@2x.png */,
+				60390531E6989CC7FBFCB471 /* CKSideBarItem.h */,
+				60390C602C60C243009B68C2 /* CKSideBarItem.m */,
 			);
 			path = CKSideBarController;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */,
 				60390F9634B4E3583978D86E /* CKSideBarController.m in Sources */,
 				60390E5B75EBB4EC204BC425 /* CKTestViewController.m in Sources */,
+				60390384643D87D83E27C702 /* CKSideBarItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,10 +30,13 @@
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
 
-    self.controller1 = [self navControllerWithTitle:@"Tweets" backgroundColor:[UIColor whiteColor] barImage:nil];
-    self.controller2 = [self navControllerWithTitle:@"Connect" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"compose.png"]];
-    self.controller3 = [self navControllerWithTitle:@"Can't Touch" backgroundColor:[UIColor whiteColor] barImage:[UIImage imageNamed:@"search.png"]];
-    
+    self.controller1 = [self navControllerWithTitle:@"Tweets" barImage:nil];
+    self.controller2 = [self navControllerWithTitle:@"Connect" barImage:[UIImage imageNamed:@"compose.png"]];
+    self.controller3 = [self navControllerWithTitle:@"Can't Touch" barImage:[UIImage imageNamed:@"search.png"]];
+
+    UIViewController *detachedController = [[UIViewController alloc] init];
+    NSLog(@"side bar controller should be nil: %@", detachedController.sideBarController);
+
     self.barController = [[CKSideBarController alloc] init];
     self.barController.delegate = self;
     self.barController.viewControllers = @[
@@ -41,22 +44,28 @@
         self.controller2,
         self.controller3
     ];
+
+    NSLog(@"side bar controller should not be nil: %@", self.controller1.sideBarController);
+
     self.window.rootViewController = self.barController;
 
     return YES;
 }
 
-BOOL setTabBarTitle = YES;
-- (UINavigationController *)navControllerWithTitle:(NSString *)title backgroundColor:(UIColor *)backgroundColor barImage:(UIImage *)image {
+BOOL shouldAlternate = YES;
+
+- (UINavigationController *)navControllerWithTitle:(NSString *)title barImage:(UIImage *)image {
     CKTestViewController *controller = [[CKTestViewController alloc] init];
     controller.title = title;
-    controller.view.backgroundColor = backgroundColor;
+    controller.view.backgroundColor = [UIColor whiteColor];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-    if (setTabBarTitle)
-        navController.tabBarItem.title = title;
-    navController.tabBarItem.image = image;
+    if (shouldAlternate)
+        navController.sideBarItem.title = title;
+    if (image)
+        navController.sideBarItem.image = image;
+    navController.sideBarItem.isGlowing = shouldAlternate;
 
-    setTabBarTitle = !setTabBarTitle;
+    shouldAlternate = !shouldAlternate;
 
     return navController;
 }
@@ -110,10 +119,5 @@ BOOL setTabBarTitle = YES;
 - (void)sideBarController:(CKSideBarController *)sideBarController didSelectViewController:(UIViewController *)viewController {
     NSLog(@"viewController %@ selected!", viewController);
 }
-
-- (BOOL)sideBarController:(CKSideBarController *)sideBarController rowShouldGlow:(NSUInteger)row {
-    return row == 2;
-}
-
 
 @end

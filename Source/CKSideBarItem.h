@@ -16,36 +16,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CKSideBarItem.h"
-
-@protocol CKSideBarControllerDelegate;
 
 
-@interface CKSideBarController : UIViewController
+@interface CKSideBarItem : NSObject
 
-@property (nonatomic, copy) NSArray *viewControllers;
-@property (nonatomic, assign) UIViewController *selectedViewController;
-@property (nonatomic) NSUInteger selectedIndex;
-@property (nonatomic, assign) id<CKSideBarControllerDelegate> delegate;
+@property (nonatomic) NSString *title;
+@property (nonatomic) UIImage *image;
+@property (nonatomic) BOOL isGlowing;
 
-// TODO: get rid of this method (KVO on sideBarItem on managed viewControllers)
-- (void)refresh;
-
-@end
-
-
-@protocol CKSideBarControllerDelegate <NSObject>
-
-@optional
-- (BOOL)sideBarController:(CKSideBarController *)sideBarController shouldSelectViewController:(UIViewController *)viewController;
-- (void)sideBarController:(CKSideBarController *)sideBarController didSelectViewController:(UIViewController *)viewController;
-
-@end
-
-
-@interface UIViewController (CKSideBarController)
-
-@property (nonatomic, readonly, retain) CKSideBarController *sideBarController;     // If the view controller has a side bar controller as its ancestor, return it. Returns nil otherwise.
-@property (nonatomic) CKSideBarItem *sideBarItem;
+@property (nonatomic, readonly) UIImage *selectedImage;
+@property (nonatomic, readonly) UIImage *unSelectedImage;
 
 @end

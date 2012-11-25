@@ -16,6 +16,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <objc/runtime.h>
 #import "CKSideBarController.h"
 
 #define CKSideBarWidth 84
@@ -27,7 +28,8 @@
 @interface CKSideBarCell : UITableViewCell
 
 @property (nonatomic) UIImageView *iconView;
-@property (nonatomic) UIImage *image;
+@property (nonatomic) UIImage *selectedImage;
+@property (nonatomic) UIImage *unSelectedImage;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UIImageView *glowView;
 
@@ -73,95 +75,14 @@
 - (void)setIsActive:(BOOL)isActive {
     self.titleLabel.textColor = isActive ? [UIColor whiteColor] : [UIColor lightGrayColor];
     if (isActive) {
-        self.iconView.image = [self tabBarImage:self.image size:self.image.size backgroundImage:[UIImage imageNamed:@"selected-image-background.png"]];
+        self.iconView.image = self.selectedImage;
     } else {
-        self.iconView.image = [self tabBarImage:self.image size:self.image.size backgroundImage:nil];
+        self.iconView.image = self.unSelectedImage;
     }
 }
 
 - (void)setIsGlowing:(BOOL)isGlowing {
     self.glowView.hidden = !isGlowing;
-}
-
--(UIImage*)tabBarImage:(UIImage*)startImage size:(CGSize)targetSize backgroundImage:(UIImage*)backgroundImageSource {
-    UIImage* backgroundImage = [self tabBarBackgroundImageWithSize:startImage.size backgroundImage:backgroundImageSource];
-
-    // Convert the passed in image to a white backround image with a black fill
-    UIImage* bwImage = [self blackFilledImageWithWhiteBackgroundUsing:startImage];
-
-    // Create an image mask
-    CGImageRef imageMask = CGImageMaskCreate(CGImageGetWidth(bwImage.CGImage),
-            CGImageGetHeight(bwImage.CGImage),
-            CGImageGetBitsPerComponent(bwImage.CGImage),
-            CGImageGetBitsPerPixel(bwImage.CGImage),
-            CGImageGetBytesPerRow(bwImage.CGImage),
-            CGImageGetDataProvider(bwImage.CGImage), NULL, YES);
-
-    // Using the mask create a new image
-    CGImageRef tabBarImageRef = CGImageCreateWithMask(backgroundImage.CGImage, imageMask);
-
-    UIImage* tabBarImage = [UIImage imageWithCGImage:tabBarImageRef scale:startImage.scale orientation:startImage.imageOrientation];
-
-    // Cleanup
-    CGImageRelease(imageMask);
-    CGImageRelease(tabBarImageRef);
-
-    // Create a new context with the right size
-    UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0);
-
-    // Draw the new tab bar image at the center
-    [tabBarImage drawInRect:CGRectMake((targetSize.width/2.0) - (startImage.size.width/2.0), (targetSize.height/2.0) - (startImage.size.height/2.0), startImage.size.width, startImage.size.height)];
-
-    // Generate a new image
-    UIImage* resultImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return resultImage;
-}
-
-// Convert the image's fill color to black and background to white
-- (UIImage *)blackFilledImageWithWhiteBackgroundUsing:(UIImage*)startImage {
-    // Create the proper sized rect
-    CGRect imageRect = CGRectMake(0, 0, CGImageGetWidth(startImage.CGImage), CGImageGetHeight(startImage.CGImage));
-
-    // Create a new bitmap context
-    CGContextRef context = CGBitmapContextCreate(NULL, imageRect.size.width, imageRect.size.height, 8, 0, CGImageGetColorSpace(startImage.CGImage), kCGImageAlphaPremultipliedLast);
-
-    CGContextSetRGBFillColor(context, 1, 1, 1, 1);
-    CGContextFillRect(context, imageRect);
-
-    // Use the passed in image as a clipping mask
-    CGContextClipToMask(context, imageRect, startImage.CGImage);
-    // Set the fill color to black: R:0 G:0 B:0 alpha:1
-    CGContextSetRGBFillColor(context, 0, 0, 0, 1);
-    // Fill with black
-    CGContextFillRect(context, imageRect);
-
-    // Generate a new image
-    CGImageRef newCGImage = CGBitmapContextCreateImage(context);
-    UIImage* newImage = [UIImage imageWithCGImage:newCGImage scale:startImage.scale orientation:startImage.imageOrientation];
-
-    // Cleanup
-    CGContextRelease(context);
-    CGImageRelease(newCGImage);
-
-    return newImage;
-}
-
-- (UIImage *)tabBarBackgroundImageWithSize:(CGSize)targetSize backgroundImage:(UIImage*)backgroundImage {
-    UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0);
-    if (backgroundImage) {
-        // Draw the background image centered
-        [backgroundImage drawInRect:CGRectMake((targetSize.width - CGImageGetWidth(backgroundImage.CGImage)) / 2, (targetSize.height - CGImageGetHeight(backgroundImage.CGImage)) / 2, CGImageGetWidth(backgroundImage.CGImage), CGImageGetHeight(backgroundImage.CGImage))];
-    } else {
-        [[UIColor lightGrayColor] set];
-        UIRectFill(CGRectMake(0, 0, targetSize.width, targetSize.height));
-    }
-
-    UIImage *finalBackgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return finalBackgroundImage;
 }
 
 @end
@@ -218,6 +139,12 @@
 
 - (BOOL)shouldAutorotate {
     return YES;
+}
+
+#pragma mark - public
+
+- (void)refresh {
+    [self.sideBarView reloadData];
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers {
@@ -292,13 +219,13 @@
     if (!cell) cell = [[CKSideBarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
 
     UIViewController *viewController = self.viewControllers[indexPath.row];
-    NSString *title = viewController.tabBarItem.title ? viewController.tabBarItem.title : viewController.title;
-    UIImage *image = viewController.tabBarItem.image ? viewController.tabBarItem.image : [UIImage imageNamed:@"default-tabbar-icon.png"];
+    CKSideBarItem *sideBarItem = viewController.sideBarItem;
 
-    cell.titleLabel.text = title;
-    [cell setImage:image];
+    cell.titleLabel.text = sideBarItem.title;
+    cell.selectedImage = sideBarItem.selectedImage;
+    cell.unSelectedImage = sideBarItem.unSelectedImage;
     [cell setIsActive:(viewController == self.selectedViewController)];
-    [cell setIsGlowing:[self.delegate respondsToSelector:@selector(sideBarController:rowShouldGlow:)] && [self.delegate sideBarController:self rowShouldGlow:indexPath.row]];
+    [cell setIsGlowing:sideBarItem.isGlowing];
 
     return cell;
 }
@@ -306,6 +233,39 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedViewController = self.viewControllers[indexPath.row];
     [self.sideBarView reloadData];
+}
+
+@end
+
+@implementation UIViewController (CKSideBarController)
+
+- (CKSideBarController *)sideBarController {
+    UIViewController *parent = self.parentViewController;
+    while (parent != nil) {
+        if ([parent isKindOfClass:[CKSideBarController class]]) {
+            return (CKSideBarController *)parent;
+        } else {
+            parent = parent.parentViewController;
+        }
+    }
+    return nil;
+}
+
+static char const * const CKSideBarItemKey = "CKSideBarItemKey";
+
+- (void)setSideBarItem:(CKSideBarItem *)sideBarItem {
+    objc_setAssociatedObject(self, CKSideBarItemKey, sideBarItem, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CKSideBarItem *)sideBarItem {
+    CKSideBarItem *item = objc_getAssociatedObject(self, CKSideBarItemKey);
+    if (!item) {
+        item = [[CKSideBarItem alloc] init];
+        item.title = self.title;
+        item.image = [UIImage imageNamed:@"default-tabbar-icon.png"];
+        [self setSideBarItem:item];
+    }
+    return item;
 }
 
 @end
