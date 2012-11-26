@@ -1,6 +1,8 @@
 # CKSideBarController
 Documentation is on the way; in the meantime, take a look at the example app included in the source code to see what you can do with CKSideBarController!
 
+(http://cloud.github.com/downloads/jaykz52/CKSideBarController/screenshot1.png)
+
 ## License (MIT)
 Copyright (c) 2012 Jason Kozemczak
 
