@@ -24,9 +24,9 @@
 @interface CKSideBarController : UIViewController
 
 @property (nonatomic, copy) NSArray *viewControllers;
-@property (nonatomic, assign) UIViewController *selectedViewController;
+@property (nonatomic, weak) UIViewController *selectedViewController;
 @property (nonatomic) NSUInteger selectedIndex;
-@property (nonatomic, assign) id<CKSideBarControllerDelegate> delegate;
+@property (nonatomic, weak) id<CKSideBarControllerDelegate> delegate;
 
 // TODO: get rid of this method (KVO on sideBarItem on managed viewControllers)
 - (void)refresh;
@@ -45,7 +45,7 @@
 
 @interface UIViewController (CKSideBarController)
 
-@property (nonatomic, readonly, retain) CKSideBarController *sideBarController;     // If the view controller has a side bar controller as its ancestor, return it. Returns nil otherwise.
+@property (nonatomic, readonly, strong) CKSideBarController *sideBarController;     // If the view controller has a side bar controller as its ancestor, return it. Returns nil otherwise.
 @property (nonatomic) CKSideBarItem *sideBarItem;
 
 @end
