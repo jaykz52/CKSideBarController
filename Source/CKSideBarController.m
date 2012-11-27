@@ -98,6 +98,11 @@
 @implementation CKSideBarController
 
 - (id)init {
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        [NSException raise:NSInvalidArgumentException format:@"CKSideBarController is only supported when running under UIUserInterfaceIdiomPad"];
+        return nil;
+    }
+    
     self = [super init];
     if (self) {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"rough_diagonal.png"]];
