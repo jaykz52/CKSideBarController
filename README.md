@@ -16,7 +16,7 @@ CKSideBarController uses ARC, so for non-ARC projects, you'll want to add the `f
 ## Using CKSideBarController
 CKSideBarController, like UITabBarController and UISplitViewController, works best as the rootViewController of your application:
 
-```
+```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -33,7 +33,7 @@ CKSideBarController, like UITabBarController and UISplitViewController, works be
 
 In order to provide content for the CKSideBarController, you assign an array of UIViewControllers to the `viewControllers` property of your CKSideBarController instance:
 
-```
+```objective-c
 - (void)someMethod {
     self.barController.viewControllers = @[
       [[FirstViewController alloc] init],
@@ -45,7 +45,7 @@ In order to provide content for the CKSideBarController, you assign an array of 
 
 We can configure how each UIViewController managed by the bar controller is displayed by setting by manipulating each's `sideBarItem`. You'll need to import the `CKSideBarController.h` file in order to see the `sideBarItem` property.
 
-```
+```objective-c
 #import "CKSideBarController.m"
 
 // ...
@@ -71,7 +71,7 @@ We can configure how each UIViewController managed by the bar controller is disp
 
 For more fine-grained control over the CKSideBarController's behavior is via the CKSideBarController's delegate. All methods in the `CKSideBarControllerDelegate` are optional, so implement the ones important to you. Be sure to set the `delegate` property of your CKSideBarController to the appropriate object.
 
-```
+```objective-c
 #pragma mark - CKSideBarControllerDelegate
 
 // Remember sideBarController.delegate = self !!!
