@@ -1,5 +1,7 @@
 # CKSideBarController
-Documentation is on the way; in the meantime, take a look at the example app included in the source code to see what you can do with CKSideBarController!
+CKSideBarController is a UITabBarController-like UIViewController for iPad. It's inspired by Twitter for iPad, as well as my own work. Take a look at the example app included in the source code to see what you can do with CKSideBarController, see the below walkthrough, or dig into the source code!
+
+![Screenshot](http://cloud.github.com/downloads/jaykz52/CKSideBarController/screenshot1.png)
 
 ## Dependencies
 To use CKSideBarViewController in your project, in addition to `UIKit.framework` and `Foundation.framework` you'll need to link against the following frameworks:
