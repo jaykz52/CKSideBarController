@@ -263,12 +263,14 @@ static char const * const CKSideBarItemKey = "CKSideBarItemKey";
 }
 
 - (CKSideBarItem *)sideBarItem {
-    CKSideBarItem *item = objc_getAssociatedObject(self, CKSideBarItemKey);
+    // If we are the child of a navigationController, return that controller's item (as with tabBarItem)
+    UIViewController *controller = self.navigationController ? self.navigationController : self;
+    CKSideBarItem *item = objc_getAssociatedObject(controller, CKSideBarItemKey);
     if (!item) {
         item = [[CKSideBarItem alloc] init];
         item.title = self.title;
         item.image = [UIImage imageNamed:@"default-tabbar-icon.png"];
-        [self setSideBarItem:item];
+        [controller setSideBarItem:item];
     }
     return item;
 }
