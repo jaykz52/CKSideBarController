@@ -146,6 +146,12 @@
     return YES;
 }
 
+// < iOS 6
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
 #pragma mark - public
 
 - (void)refresh {
