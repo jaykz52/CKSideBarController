@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'CKSideBarController'
-  s.version  = '0.0.1'
+  s.version  = ‘0.0.2’
   s.license  = 'MIT'
   s.summary  = 'CKSideBarController is a UITabBarController-like UIViewController for iPad.'
   s.homepage = 'https://github.com/jaykz52/CKSideBarController'

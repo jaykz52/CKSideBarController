@@ -17,9 +17,9 @@
 
 #import <Foundation/Foundation.h>
 #import "CKSideBarItem.h"
+#import "CKSideBarCell.h"
 
 @protocol CKSideBarControllerDelegate;
-
 
 @interface CKSideBarController : UIViewController
 

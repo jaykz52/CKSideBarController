@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50D1A04C18380C3D00B9172B /* CKSideBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D1A04B18380C3D00B9172B /* CKSideBarCell.m */; };
 		6039004E2543EE446519928D /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390357DCE9834B33EA962E /* search.png */; };
 		6039020135B7FE399ECC8581 /* compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 6039009C327E05AD11B04DD3 /* compose.png */; };
 		603902A70EDD557C51285919 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60390F3BC828FC41D1CDF940 /* Default-568h@2x.png */; };
@@ -37,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50D1A04A18380C3D00B9172B /* CKSideBarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKSideBarCell.h; sourceTree = "<group>"; };
+		50D1A04B18380C3D00B9172B /* CKSideBarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKSideBarCell.m; sourceTree = "<group>"; };
 		6039008B969B70CA90BB469F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6039009C327E05AD11B04DD3 /* compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compose.png; sourceTree = "<group>"; };
 		603900E3CF099A5EA7D85F38 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 				60390746D94E2FAA62A5BCEC /* Supporting Files */,
 				60390D4C57AD386112E2E314 /* CKAppDelegate.h */,
 				603902D4BE74F217BB3CBDEA /* CKAppDelegate.m */,
+				50D1A04A18380C3D00B9172B /* CKSideBarCell.h */,
+				50D1A04B18380C3D00B9172B /* CKSideBarCell.m */,
 				60390F82531E058FB59E3E2F /* CKSideBarController.h */,
 				60390A626D668E03CF89A800 /* CKSideBarController.m */,
 				60390D9F8818634E07CB14F7 /* Resources */,
@@ -193,6 +198,8 @@
 /* Begin PBXProject section */
 		60390155111257D4D488F5D3 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 603906AF7F28AFF64F432D89 /* Build configuration list for PBXProject "CKSideBarController" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -247,6 +254,7 @@
 				6039057337996A8C74B04646 /* CKAppDelegate.m in Sources */,
 				60390F9634B4E3583978D86E /* CKSideBarController.m in Sources */,
 				60390E5B75EBB4EC204BC425 /* CKTestViewController.m in Sources */,
+				50D1A04C18380C3D00B9172B /* CKSideBarCell.m in Sources */,
 				60390384643D87D83E27C702 /* CKSideBarItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
